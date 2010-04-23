@@ -34,12 +34,12 @@
       <menuContribution
             locationURI="menu:org.eclipse.ui.main.menu?after=additions">
          <menu
-               label="Sample Menu"
-               mnemonic="M"
+               label="Django"
+               mnemonic="D"
                id="com.royvandewater.django_testing.menus.sampleMenu">
             <command
                   commandId="com.royvandewater.django_testing.commands.runTests"
-                  mnemonic="S"
+                  mnemonic="R"
                   id="com.royvandewater.django_testing.menus.sampleCommand">
             </command>
          </menu>
