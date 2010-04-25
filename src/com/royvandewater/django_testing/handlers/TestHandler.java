@@ -1,5 +1,6 @@
 package com.royvandewater.django_testing.handlers;
 
+import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -59,7 +60,6 @@ public class TestHandler extends AbstractHandler
             return;
         }
 
-        
         final IProject project = getCurrentFile().getProject();
         try {
             project.setPersistentProperty(new QualifiedName("", lastCommand), currentTest);
@@ -83,12 +83,13 @@ public class TestHandler extends AbstractHandler
         try {
 
             File current_directory = project.getLocation().append("src").append(project.getName()).toFile();
-            String[] cmd = new String[] { "python", "manage.py", "test", currentTest };
+            String[] cmd = new String[] { "python", "-u", "manage.py", "test", currentTest };
             process = Runtime.getRuntime().exec(cmd, null, current_directory);
 
             MessageConsoleStream messageStream = getConsole().newMessageStream();
+            messageStream.setActivateOnWrite(true);
 
-//            InputStreamReader stdout = new InputStreamReader(process.getInputStream());
+            InputStreamReader stdout = new InputStreamReader(process.getInputStream());
             InputStreamReader stderr = new InputStreamReader(process.getErrorStream());
 
             while (!monitor.isCanceled()) {
@@ -99,10 +100,11 @@ public class TestHandler extends AbstractHandler
                 } catch (IllegalThreadStateException e) {
                     done = false;
                 }
+
+                while (stdout.ready())
+                    messageStream.print(String.valueOf((char)stdout.read()));
                 while (stderr.ready())
                     messageStream.print(String.valueOf((char)stderr.read()));
-                //                while (stdout.ready())
-                //                    messageStream.print(String.valueOf((char)stdout.read()));
 
                 if (done)
                     break;
@@ -163,6 +165,15 @@ public class TestHandler extends AbstractHandler
         IPath fullPath = editorFile.getFullPath();
         String folderName = fullPath.removeLastSegments(1).lastSegment();
 
+        if (folderName == null)
+            return ""; // Should run all python tests
+
+        if (classTitle == null)
+            return folderName;
+
+        if (functionTitle == null)
+            return join(".", folderName, classTitle);
+
         if (!functionTitle.startsWith("test")) {
             try {
                 return editorFile.getProject().getPersistentProperty(new QualifiedName("", lastCommand));
@@ -171,14 +182,7 @@ public class TestHandler extends AbstractHandler
             }
         }
 
-        if (classTitle == null)
-            return folderName;
-
-        if (functionTitle == null)
-            return join(".", folderName, classTitle);
-
         return join(".", folderName, classTitle, functionTitle);
-
     }
 
     private static IFile getCurrentFile()
