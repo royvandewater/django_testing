@@ -1,0 +1,41 @@
+BUILD:
+
+    Open the project in eclipse, rightclick the project in the Package Explorer and select "Export". Export the plugin as "Plug-in Development"->"Deployable plug-ins and flagments" and save it to whatever directory you like.
+
+
+INSTALLATION:
+
+    Place the generated com.royvandewater.django_testing_x.jar file into your eclipse plugins directory (it was ~/.eclipse/org.eclipse.platform_3.5.0_x/plugins/). 
+
+
+USAGE:
+
+    Place the cursor anywhere within a python file containing Django tests and press Alt+Shift+F11. If your cursor is currently inside of a specific test method, it will run only that method. If it is outside any test methods but still within the class, the plugin will execute all test methods in that class. Lastly, if you are in a function where the name is not prefixed with "test", the plugin will execute the last run test. This is great for writing a test and running it from another file as you write the implementation.
+
+
+LEGAL:
+
+    Copyright 2010 Roy van de Water <support@royvandewater.com> and Josh Wolfe
+    All rights reserved.
+
+    Redistribution and use in source and binary forms, with or without
+    modification, are permitted provided that the following conditions are met:
+        * Redistributions of source code must retain the above copyright
+          notice, this list of conditions and the following disclaimer.
+        * Redistributions in binary form must reproduce the above copyright
+          notice, this list of conditions and the following disclaimer in the
+          documentation and/or other materials provided with the distribution.
+        * Neither the name of the <organization> nor the
+          names of its contributors may be used to endorse or promote products
+          derived from this software without specific prior written permission.
+
+    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+    ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+    WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+    DISCLAIMED. IN NO EVENT SHALL <COPYRIGHT HOLDER> BE LIABLE FOR ANY
+    DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+    (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+    LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+    ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+    (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+    SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.

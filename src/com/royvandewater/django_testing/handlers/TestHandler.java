@@ -78,7 +78,6 @@ public class TestHandler extends AbstractHandler
 
     private static void runTest(String currentTest, IProject project, IProgressMonitor monitor)
     {
-        // TODO Auto-generated method stub
         Process process;
         try {
 
