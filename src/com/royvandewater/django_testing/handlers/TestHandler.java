@@ -162,16 +162,16 @@ public class TestHandler extends AbstractHandler
 
         IPath fullPath = editorFile.getFullPath();
         String folderName = fullPath.removeLastSegments(1).lastSegment();
+        String fileName = fullPath.lastSegment();
 
         if (folderName == null)
             return ""; // Should run all python tests
         
-        if (!folderName.equals("tests.py"))
+        if (!fileName.equals("tests.py"))
             return getLastTest(editorFile);
 
         if (classTitle == null)
             return folderName;
-
         if (functionTitle == null)
             return join(".", folderName, classTitle);
 
