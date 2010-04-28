@@ -1,6 +1,5 @@
 package com.royvandewater.django_testing.handlers;
 
-import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -166,6 +165,9 @@ public class TestHandler extends AbstractHandler
 
         if (folderName == null)
             return ""; // Should run all python tests
+        
+        if (!folderName.equals("tests.py"))
+            return getLastTest(editorFile);
 
         if (classTitle == null)
             return folderName;
@@ -173,15 +175,21 @@ public class TestHandler extends AbstractHandler
         if (functionTitle == null)
             return join(".", folderName, classTitle);
 
-        if (!functionTitle.startsWith("test")) {
-            try {
-                return editorFile.getProject().getPersistentProperty(new QualifiedName("", lastCommand));
-            } catch (CoreException e) {
-                return null;
-            }
-        }
+        if (!functionTitle.startsWith("test"))
+            return getLastTest(editorFile);
+        
+        
+        
 
         return join(".", folderName, classTitle, functionTitle);
+    }
+    
+    private static String getLastTest(IFile editorFile) {
+        try {
+            return editorFile.getProject().getPersistentProperty(new QualifiedName("", lastCommand));
+        } catch (CoreException e) {
+            return null;
+        }    
     }
 
     private static IFile getCurrentFile()
